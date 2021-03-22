@@ -1,0 +1,16 @@
+FROM node:14 AS build
+
+ARG STUDIO_GIT=https://github.com/biothings/biothings_studio.git
+ARG GIT_CHECKOUT=master
+
+WORKDIR /build/src/github.com/biothings/biothings_studio
+RUN git clone ${STUDIO_GIT} .
+RUN git checkout ${GIT_CHECKOUT}
+WORKDIR /build/src/github.com/biothings/biothings_studio/webapp
+RUN npm install && npm run build --legacy-peer-deps
+
+FROM nginx:mainline-alpine
+EXPOSE 80/tcp
+COPY --from=build --chown=root:www-data /build/src/github.com/biothings/biothings_studio/webapp/dist /srv/www/webapp
+COPY files/webapp.conf /etc/nginx/conf.d/default.conf
+

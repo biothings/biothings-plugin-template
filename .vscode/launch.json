@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch BioThings Hub",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/vscode/biothings-hub/src/bin/hub.py",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${env:PYTHONPATH}:/home/vscode/biothings-hub/src"
+            },
+            "cwd": "/home/vscode/biothings-hub/src"
+        }
+    ]
+}

@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  biothings:
+    build: 
+      context: .
+      dockerfile: Dockerfile.biothings
+      args:
+        # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
+        USER_UID: 1000
+        USER_GID: 1000
+        PYTHON_VERSION: 3.6
+        BIOTHINGS_VERSION: 0.9.1
+        API_GIT: https://github.com/biothings/biothings_studio.git
+        API_NAME: vanilla-hub
+    init: true
+    depends_on: 
+      - "mongodb"
+      - "elasticsearch"
+    volumes:
+      # Forwards the local Docker socket to the container.
+      # This is required because the docker extension in VSC needs it.
+      - /var/run/docker.sock:/var/run/docker-host.sock 
+      # Update this to wherever you want VS Code to mount the folder of your project
+      - ..:/data/biothings/plugins/plugin-name
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+  mongodb:
+    image: mongo:4.0
+    ports:
+      - "27017:27017"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.14
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.webapp
+      args: 
+        WEBAPP_GIT: https://github.com/biothings/biothings_studio.git
+        GIT_CHECKOUT: master
+    ports: 
+      - "8080:80"
+
+
+    # Uncomment the next four lines if you will use a ptrace-based debuggers like C++, Go, and Rust.
+    # cap_add:
+    #  - SYS_PTRACE
+    # security_opt:
+    #   - seccomp:unconfined
+
+    # Uncomment the next line to use a non-root user for all processes.
+    # user: vscode
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
