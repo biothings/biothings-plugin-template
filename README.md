@@ -1,15 +1,21 @@
-# biothings-ide
+# BioThings Plugin Template
 VSCode Dev Container based environment for developing BioThings plugins
 
 ## Usage
 
+### 0. Install prerequisite software
+You will need:
+- Docker with Docker Compose (installing Docker Desktop is sufficient)
+- Visual Studio Code
+- [Docker Extension for VSC](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+- ["Remote - Containers" Extension for VSC](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
 ### 1. Generate a new repo from the template
+
+On GitHub, just click the big green button "Use this template". You can also download this and copy all the files (except this README.md file), make sure you copy the files and directories whose names begins with "." (a dot).
 
 ### 2. Update files to reflect your plugin
 
-Make sure you have Visual Studio Code installed, 
-with the extensions ["Docker"](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) 
-and ["Remote - Containers"](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installed. 
 Open up the newly generated repository in Visual Studio Code, then:
 
 - In `.devcontainer/devcontainer.json` set the `name` field to your liking.
